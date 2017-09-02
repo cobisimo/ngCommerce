@@ -1,0 +1,17 @@
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item" *ngIf="!(user | async)">
+    <a class="nav-link" href="#" (click)="login()">Login</a>
+  </li>
+  <li class="nav-item dropdown" *ngIf="(user | async)">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{(user | async)?.displayName}}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" routerLink="/products">Products</a>
+      <a class="dropdown-item" routerLink="/orders">Orders</a>
+      <a class="dropdown-item" routerLink="/users">Users</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#" (click)="logout()">Logout</a>
+    </div>
+  </li>
+</ul>
