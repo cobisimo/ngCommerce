@@ -1,3 +1,17 @@
+<ul class="navbar-nav mr-auto">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/products" routerLinkActive="active">Products</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/orders" routerLinkActive="active">Orders</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+  </li>
+</ul>
 <ul class="navbar-nav ml-auto">
   <li class="nav-item" *ngIf="!(user | async)">
     <a class="nav-link" href="#" (click)="login()">Login</a>
@@ -7,9 +21,7 @@
       {{(user | async)?.displayName}}
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-      <a class="dropdown-item" routerLink="/products">Products</a>
-      <a class="dropdown-item" routerLink="/orders">Orders</a>
-      <a class="dropdown-item" routerLink="/users">Users</a>
+      <a class="dropdown-item" routerLink="/settings">Settings</a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="#" (click)="logout()">Logout</a>
     </div>
