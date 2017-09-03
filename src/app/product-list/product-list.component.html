@@ -1,10 +1,11 @@
 <p>
   Our products:
 </p>
-<ul>
-  <li class="text" *ngFor="let product of (products | async).products">
+<ul *ngIf="products | async; let products; else loading">
+  <li class="text" *ngFor="let product of products">
     <a [routerLink]="['/products', product.$key]">
       {{product.title}} - ${{product.price}}
     </a>
   </li>
 </ul>
+<ng-template #loading>Loading products data...</ng-template>

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { Product } from '../models/product';
+import { Product } from 'models/product';
 
-import * as reducer from '../reducers/data';
-import * as Actions from '../actions/data';
+import { State } from 'store/reducers/product.reducer';
+import { ProductActions } from 'store/actions';
 
 @Component({
   selector: 'app-product-list',
@@ -15,19 +15,23 @@ import * as Actions from '../actions/data';
 export class ProductListComponent implements OnInit {
   products: Observable<Product[]>;
 
-  constructor(private store: Store<reducer.State>) {
+  constructor(private store: Store<{ products: State }>) {
     this.products = this.store.select(state => {
-      return state.products;
+      return state.products.data;
     });
+    /*this.products = this.store.select('products');*/
   }
 
   ngOnInit() {
-    /*this.store.dispatch(new Actions.AddProduct({
+    this.store.dispatch(new ProductActions.GetProducts({}));
+  }
+
+  addProduct() {
+    this.store.dispatch(new ProductActions.AddProduct({
       pid: '001',
       title: 'test',
       description: 'desc',
       price: 100
-    }));*/
-    this.store.dispatch(new Actions.FetchProducts({}));
+    }));
   }
 }

@@ -1,4 +1,12 @@
-<p>
-  product-details works!
-  {{pid}}
-</p>
+<div *ngIf="product | async; let product; else loading">
+  <h1>
+    {{product.title}}
+  </h1>
+  <h2>
+    ${{product.price}}
+  </h2>
+  <p>
+    {{product.description}}
+  </p>
+</div>
+<ng-template #loading>Loading product data...</ng-template>

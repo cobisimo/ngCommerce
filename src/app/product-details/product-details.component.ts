@@ -1,5 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Product } from 'models/product';
+import { Observable } from 'rxjs/Observable';
+import { ProductActions } from 'store/actions';
+import { FirebaseService } from 'firebase.service';
 
 @Component({
   selector: 'app-product-details',
@@ -7,14 +12,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  pid: string;
+  product: Observable<Product>;
   private sub: any;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private firebaseService: FirebaseService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.pid = params['pid'];
+      this.product = this.firebaseService.getProduct(params['pid']);
     });
   }
 

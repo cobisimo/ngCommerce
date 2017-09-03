@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import * as actions from '../actions/data';
-import { Product } from '../models/product';
-import { FirebaseService } from '../firebase.service';
+import { ProductActions } from 'store/actions';
+import { Product } from 'models/product';
+import { FirebaseService } from 'firebase.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
@@ -17,7 +17,7 @@ import 'rxjs/add/operator/delay';
 
 
 @Injectable()
-export class DataEffects {
+export class ProductEffects {
 
   constructor(private actions$: Actions, private firebaseService: FirebaseService, private db: AngularFireDatabase) {
   }
@@ -29,15 +29,15 @@ export class DataEffects {
     );*/
 
   @Effect()
-  FetchProducts$: Observable<Action> = this.actions$.ofType(actions.ActionTypes.FETCH_PRODUCTS)
-    .map((action: actions.FetchProducts) => action.payload )
+  FetchProducts$: Observable<Action> = this.actions$.ofType(ProductActions.ActionTypes.GET_PRODUCTS)
+    .map((action: ProductActions.GetProducts) => action.payload)
     .mergeMap(() => this.firebaseService.loadProducts())
     .map((products: Product[]) => {
-      return new actions.FetchProductsSuccess(products);
+      return new ProductActions.GetProductsSuccess(products);
     });
 
   @Effect()
-  AddProduct$: Observable<Action> = this.actions$.ofType(actions.ActionTypes.ADD_PRODUCT)
+  AddProduct$: Observable<Action> = this.actions$.ofType(ProductActions.ActionTypes.EDIT_PRODUCT)
     .switchMap(payload => this.firebaseService.addProduct(payload)
     );
 

@@ -8,8 +8,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducer } from './reducers/data';
-import { DataEffects } from './effects/data';
+import { effects, reducers } from './store';
 
 import { FirebaseService } from './firebase.service';
 import { AdminGuard } from './admin.guard';
@@ -55,10 +54,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes
     ),
-    StoreModule.forRoot({
-      'products': reducer
-    }),
-    EffectsModule.forRoot([DataEffects]),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects),
   ],
   providers: [FirebaseService, AdminGuard],
   bootstrap: [AppComponent]
