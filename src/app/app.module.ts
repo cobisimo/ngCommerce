@@ -2,12 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppComponent } from './app.component';
-
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducer } from './reducers/data';
+import { DataEffects } from './effects/data';
+
+import { FirebaseService } from './firebase.service';
+import { AdminGuard } from './admin.guard';
 import { environment } from '../environments/environment';
+
+import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -20,10 +28,10 @@ import { HomePageComponent } from './home-page/home-page.component';
 const appRoutes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'products', component: ProductListComponent },
-  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'products/:pid', component: ProductDetailsComponent },
   { path: 'orders', component: OrderListComponent },
   { path: 'orders/:id', component: OrderDetailsComponent },
-  { path: 'users', component: UserListComponent },
+  { path: 'users', component: UserListComponent, canActivate: ['AdminGuard'] },
   { path: '**', component: NotFoundComponent }
 ];
 
@@ -46,9 +54,13 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     RouterModule.forRoot(
       appRoutes
-    )
+    ),
+    StoreModule.forRoot({
+      'products': reducer
+    }),
+    EffectsModule.forRoot([DataEffects]),
   ],
-  providers: [],
+  providers: [FirebaseService, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
