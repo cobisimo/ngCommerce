@@ -30,4 +30,8 @@ export class ProductListComponent implements OnInit {
   selectProduct(product: Product) {
     this.product = product;
   }
+
+  deleteProduct(product: Product) {
+    this.store.dispatch(new ProductActions.DeleteProduct(product));
+  }
 }

@@ -33,7 +33,6 @@ export class ProductEditComponent implements OnInit {
   ngOnInit() {
     this._product
       .subscribe(product => {
-        console.log(product);
         if (product) {
           this.productForm.setValue(product);
         }

@@ -7,6 +7,7 @@ export const ActionTypes = {
   GET_PRODUCTS_SUCCESS: type('Get PRODUCTS Success'),
   ADD_PRODUCT: type('Add PRODUCT'),
   UPDATE_PRODUCT: type('Edit PRODUCT'),
+  DELETE_PRODUCT: type('Delete PRODUCT'),
 };
 
 export class GetProducts implements Action {
@@ -29,8 +30,14 @@ export class UpdateProduct implements Action {
   constructor(public payload: any) { }
 }
 
+export class DeleteProduct implements Action {
+  readonly type = ActionTypes.DELETE_PRODUCT;
+  constructor(public payload: any) { }
+}
+
 export type Actions
   = GetProducts
   | GetProductsSuccess
   | AddProduct
-  | UpdateProduct;
+  | UpdateProduct
+  | DeleteProduct;

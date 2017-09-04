@@ -30,7 +30,7 @@ export class FirebaseService {
     return this.db.object(`/products/${key}`).update(data.payload);
   }
 
-  deleteProduct(product: Product) {
-    return this.db.object(`/products/${product.$key}`).remove();
+  deleteProduct(data) {
+    return this.db.object(`/products/${data.payload.$key}`).remove();
   }
 }

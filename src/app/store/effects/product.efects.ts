@@ -47,4 +47,11 @@ export class ProductEffects {
     .debounceTime(300)
     .do((payload) => this.firebaseService.updateProduct(payload))
     .filter(() => true);
+
+  @Effect()
+  DeleteProduct$: Observable<Action> = this.actions$
+    .ofType(ProductActions.ActionTypes.DELETE_PRODUCT)
+    .debounceTime(300)
+    .do((payload) => this.firebaseService.deleteProduct(payload))
+    .filter(() => true);
 }
