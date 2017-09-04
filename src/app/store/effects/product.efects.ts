@@ -14,6 +14,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/filter';
 
 
 @Injectable()
@@ -22,14 +24,10 @@ export class ProductEffects {
   constructor(private actions$: Actions, private firebaseService: FirebaseService, private db: AngularFireDatabase) {
   }
 
-  /*@Effect()
-  FetchProducts$: Observable<Action> = this.actions$.ofType(actions.ActionTypes.FETCH_PRODUCTS)
-    .switchMap(() => this.firebaseService.loadProducts()
-      .do((payload: Product[]) => new actions.FetchProductsSuccess(payload))
-    );*/
-
   @Effect()
-  FetchProducts$: Observable<Action> = this.actions$.ofType(ProductActions.ActionTypes.GET_PRODUCTS)
+  GetProducts$: Observable<Action> = this.actions$
+    .ofType(ProductActions.ActionTypes.GET_PRODUCTS)
+    .debounceTime(300)
     .map((action: ProductActions.GetProducts) => action.payload)
     .mergeMap(() => this.firebaseService.loadProducts())
     .map((products: Product[]) => {
@@ -37,8 +35,16 @@ export class ProductEffects {
     });
 
   @Effect()
-  AddProduct$: Observable<Action> = this.actions$.ofType(ProductActions.ActionTypes.EDIT_PRODUCT)
-    .switchMap(payload => this.firebaseService.addProduct(payload)
-    );
+  AddProduct$: Observable<Action> = this.actions$
+    .ofType(ProductActions.ActionTypes.ADD_PRODUCT)
+    .debounceTime(300)
+    .do((payload) => this.firebaseService.addProduct(payload))
+    .filter(() => true);
 
+  @Effect()
+  UpdateProduct$: Observable<Action> = this.actions$
+    .ofType(ProductActions.ActionTypes.UPDATE_PRODUCT)
+    .debounceTime(300)
+    .do((payload) => this.firebaseService.updateProduct(payload))
+    .filter(() => true);
 }

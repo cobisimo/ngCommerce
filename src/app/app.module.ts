@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -23,6 +24,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomePageComponent },
@@ -44,10 +46,13 @@ const appRoutes: Routes = [
     OrderListComponent,
     ProductDetailsComponent,
     OrderDetailsComponent,
-    HomePageComponent
+    HomePageComponent,
+    ProductEditComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,

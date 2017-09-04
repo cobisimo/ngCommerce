@@ -6,6 +6,8 @@
     <a [routerLink]="['/products', product.$key]">
       {{product.title}} - ${{product.price}}
     </a>
+    <button (click)="selectProduct(product)">Edit</button>
   </li>
 </ul>
+<app-product-edit [product]="product"></app-product-edit>
 <ng-template #loading>Loading products data...</ng-template>

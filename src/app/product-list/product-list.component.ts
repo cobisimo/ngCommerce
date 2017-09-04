@@ -14,6 +14,7 @@ import { ProductActions } from 'store/actions';
 })
 export class ProductListComponent implements OnInit {
   products: Observable<Product[]>;
+  product: Product = null;
 
   constructor(private store: Store<{ products: State }>) {
     this.products = this.store.select(state => {
@@ -26,12 +27,7 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(new ProductActions.GetProducts({}));
   }
 
-  addProduct() {
-    this.store.dispatch(new ProductActions.AddProduct({
-      pid: '001',
-      title: 'test',
-      description: 'desc',
-      price: 100
-    }));
+  selectProduct(product: Product) {
+    this.product = product;
   }
 }

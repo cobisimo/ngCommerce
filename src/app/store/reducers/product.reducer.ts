@@ -25,15 +25,10 @@ export function productReducer(state = initialState, action: ProductActions.Acti
         data: action.payload
       };
     }
-    case ProductActions.ActionTypes.EDIT_PRODUCT:
+    case ProductActions.ActionTypes.ADD_PRODUCT:
       return {
         ...state
       };
-    case ProductActions.ActionTypes.EDIT_PRODUCT_SUCCESS: {
-      return {
-        data: action.payload
-      };
-    }
     default:
       return state;
   }

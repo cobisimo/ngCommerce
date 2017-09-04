@@ -24,8 +24,10 @@ export class FirebaseService {
     return this.products$.push(data.payload);
   }
 
-  updateProduct(product: Product, data) {
-    return this.db.object(`/products/${product.$key}`).update(data.payload);
+  updateProduct(data) {
+    const key = data.payload.$key;
+    delete data.payload.$key;
+    return this.db.object(`/products/${key}`).update(data.payload);
   }
 
   deleteProduct(product: Product) {
