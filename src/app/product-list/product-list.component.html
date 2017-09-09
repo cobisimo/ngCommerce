@@ -8,7 +8,8 @@
     </a>
     <button (click)="selectProduct(product)">Edit</button>
     <button (click)="deleteProduct(product)">Delete</button>
+    <button (click)="buyProduct(product)">Buy</button>
   </li>
 </ul>
-<app-product-edit [product]="product"></app-product-edit>
 <ng-template #loading>Loading products data...</ng-template>
+<button (click)="selectProduct()" class="btn btn-primary">Add new product</button>

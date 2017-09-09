@@ -8,6 +8,7 @@ import { Product } from 'models/product';
 @Injectable()
 export class FirebaseService {
   private products$: FirebaseListObservable<any[]>;
+  private orders$: FirebaseListObservable<any[]>;
 
   constructor(private db: AngularFireDatabase) { }
 
@@ -32,5 +33,9 @@ export class FirebaseService {
 
   deleteProduct(data) {
     return this.db.object(`/products/${data.payload.$key}`).remove();
+  }
+
+  addOrder(data) {
+    return this.db.list('/orders').push(data.payload.$key);
   }
 }

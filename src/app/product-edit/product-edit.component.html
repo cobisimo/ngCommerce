@@ -1,12 +1,18 @@
-<div class="card">
-  <div class="card-block">
-    <form [formGroup]="productForm" (ngSubmit)="addProduct()" novalidate autocomplete="off">
-      <input placeholder="#" class="form-control" name="pid" formControlName="pid">
-      <input placeholder="Product title" class="form-control" name="title" formControlName="title">
-      <textarea placeholder="Product description" name="description" formControlName="description" rows="10"></textarea>
-      <input type="number" placeholder="0" class="form-control" name="price" formControlName="price">
-      <button type="submit">{{product?.$key ? 'Edit': 'Add'}}</button>
-      <button type="button" *ngIf="product?.$key" (click)="onCancel()">Cancel</button>
-    </form>
-  </div>
+<div class="modal-header">
+  <h4 class="modal-title">{{product?.$key ? 'Edit': 'New'}} product</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
+<form [formGroup]="productForm" (ngSubmit)="addProduct()" novalidate autocomplete="off">
+  <div class="modal-body">
+    <input placeholder="#" class="form-control" name="pid" formControlName="pid">
+    <input placeholder="Product title" class="form-control" name="title" formControlName="title">
+    <textarea placeholder="Product description" name="description" formControlName="description" rows="10"></textarea>
+    <input type="number" placeholder="0" class="form-control" name="price" formControlName="price">
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">{{product?.$key ? 'Save': 'Add'}}</button>
+    <button type="button" class="btn btn-outline-dark" *ngIf="product?.$key" (click)="onCancel()">Cancel</button>
+  </div>
+</form>

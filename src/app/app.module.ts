@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -61,8 +63,10 @@ const appRoutes: Routes = [
     ),
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
+    NgbModule.forRoot()
   ],
-  providers: [FirebaseService, AdminGuard],
-  bootstrap: [AppComponent]
+  providers: [FirebaseService, AdminGuard, NgbActiveModal],
+  bootstrap: [AppComponent],
+  entryComponents: [ProductEditComponent]
 })
 export class AppModule { }

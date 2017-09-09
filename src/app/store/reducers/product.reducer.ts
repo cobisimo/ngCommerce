@@ -29,6 +29,14 @@ export function productReducer(state = initialState, action: ProductActions.Acti
       return {
         ...state
       };
+    case ProductActions.ActionTypes.UPDATE_PRODUCT:
+      return {
+        ...state
+      };
+    case ProductActions.ActionTypes.DELETE_PRODUCT:
+      return {
+        ...state
+      };
     default:
       return state;
   }
