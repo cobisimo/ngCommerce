@@ -4,13 +4,14 @@ import {
   FirebaseListObservable
 } from 'angularfire2/database';
 import { Product } from 'models/product';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class FirebaseService {
   private products$: FirebaseListObservable<any[]>;
   private orders$: FirebaseListObservable<any[]>;
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { }
 
   loadProducts() {
     this.products$ = this.db.list('/products');
@@ -36,6 +37,8 @@ export class FirebaseService {
   }
 
   addOrder(data) {
-    return this.db.list('/orders').push(data.payload.$key);
+    this.orders$ = this.db.list('/orders');
+    data.payload.uid = this.afAuth.auth.currentUser.uid;
+    return this.orders$.push(data.payload);
   }
 }

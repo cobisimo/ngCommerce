@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { State } from 'store/reducers/product.reducer';
 import { ProductActions } from 'store/actions';
 import { Product } from 'models/product';
 
@@ -22,7 +21,7 @@ export class ProductEditComponent implements OnInit {
 
   productForm: FormGroup;
 
-  constructor(private store: Store<{ products: State }>, public activeModal: NgbActiveModal, fb: FormBuilder) {
+  constructor(private store: Store<{ products: Product }>, public activeModal: NgbActiveModal, fb: FormBuilder) {
     this.productForm = fb.group({
       'pid': [null],
       'title': [null, Validators.compose([Validators.required, Validators.minLength(3)])],

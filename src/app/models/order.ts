@@ -1,10 +1,14 @@
 import {User} from './user';
 import {Product} from './product';
 
+export interface OrderItem {
+  product: Product;
+  quantity: number;
+}
+
 export interface Order {
-  oid: string;
-  user: User;
-  products: Product[];
+  uid: string;
+  items: OrderItem[];
   status: string;
   note: string;
   sum: number;

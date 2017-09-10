@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { Product } from 'models/product';
 
-import { State } from 'store/reducers/product.reducer';
-import { ProductActions } from 'store/actions';
+import { ProductActions, OrderActions } from 'store/actions';
 import { ProductEditComponent } from 'product-edit/product-edit.component';
+import { Order } from 'models/order';
 
 @Component({
   selector: 'app-product-list',
@@ -16,17 +16,21 @@ import { ProductEditComponent } from 'product-edit/product-edit.component';
 })
 export class ProductListComponent implements OnInit {
   products: Observable<Product[]>;
+  order: Observable<Order>;
   product: Product = null;
 
-  constructor(private store: Store<{ products: State }>, private modalService: NgbModal) {
-    this.products = this.store.select(state => {
-      return state.products.data;
-    });
-    /*this.products = this.store.select('products');*/
+  constructor(
+    private productsStore: Store<{ products: Product[] }>,
+    private orderStore: Store<{ order: Order }>,
+    private modalService: NgbModal
+  ) {
+    this.products = this.productsStore.select('products');
+    this.order = this.orderStore.select('order');
   }
 
   ngOnInit() {
-    this.store.dispatch(new ProductActions.GetProducts({}));
+    this.productsStore.dispatch(new ProductActions.GetProducts(null));
+    this.orderStore.dispatch(new OrderActions.GetOrder(null));
   }
 
   selectProduct(product: Product) {
@@ -35,10 +39,11 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(product: Product) {
-    this.store.dispatch(new ProductActions.DeleteProduct(product));
+    this.productsStore.dispatch(new ProductActions.DeleteProduct(product));
   }
 
   buyProduct(product: Product) {
-    this.store.dispatch(new ProductActions.BuyProduct(product));
+    // this.store.dispatch(new OrderActions.AddOrder(product));
+    this.orderStore.dispatch(new OrderActions.AddProduct(product));
   }
 }

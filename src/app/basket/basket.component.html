@@ -1,0 +1,33 @@
+<p>
+  Your basket:
+</p>
+<table class="table table-striped" *ngIf="order | async; let order">
+  <tr>
+    <th>#</th>
+    <th>Title</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Sum</th>
+  </tr>
+  <tr *ngFor="let item of order.items">
+    <td>{{item.product.pid}}</td>
+    <td>{{item.product.title}}</td>
+    <td>{{item.quantity}}
+      <div class="btn-group">
+        <button class="btn btn-secondary" (click)="add(item.product)">+</button>
+        <button class="btn btn-secondary" (click)="remove(item.product)">-</button>
+      </div>
+    </td>
+    <td>{{item.product.price | currency:'USD':true}}</td>
+    <th>{{item.quantity * item.product.price | currency:'USD':true}}</th>
+  </tr>
+  <tr>
+    <th colspan="4" class="text-right">Sum:</th>
+    <th>{{order.sum | currency:'USD':true}}</th>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <button (click)="finishOrder(order)" *ngIf="order.items?.length">Finish order</button>
+    </td>
+  </tr>
+</table>

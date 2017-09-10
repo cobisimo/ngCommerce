@@ -27,6 +27,7 @@ import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
+import { BasketComponent } from './basket/basket.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomePageComponent },
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
   { path: 'products/:pid', component: ProductDetailsComponent },
   { path: 'orders', component: OrderListComponent },
   { path: 'orders/:id', component: OrderDetailsComponent },
+  { path: 'basket', component: BasketComponent },
   { path: 'users', component: UserListComponent, canActivate: ['AdminGuard'] },
   { path: '**', component: NotFoundComponent }
 ];
@@ -49,7 +51,8 @@ const appRoutes: Routes = [
     ProductDetailsComponent,
     OrderDetailsComponent,
     HomePageComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,

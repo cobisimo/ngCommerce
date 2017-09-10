@@ -4,11 +4,11 @@
 <ul *ngIf="products | async; let products; else loading">
   <li class="text" *ngFor="let product of products">
     <a [routerLink]="['/products', product.$key]">
-      {{product.title}} - ${{product.price}}
+      #{{product.pid}} {{product.title}} - {{product.price | currency:'USD':true}}
     </a>
     <button (click)="selectProduct(product)">Edit</button>
     <button (click)="deleteProduct(product)">Delete</button>
-    <button (click)="buyProduct(product)">Buy</button>
+    <button (click)="buyProduct(product)">Add to basket</button>
   </li>
 </ul>
 <ng-template #loading>Loading products data...</ng-template>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { ProductActions } from 'store/actions';
+import { ProductActions, OrderActions } from 'store/actions';
 import { Product } from 'models/product';
 import { FirebaseService } from 'firebase.service';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -53,5 +53,13 @@ export class ProductEffects {
     .ofType(ProductActions.ActionTypes.DELETE_PRODUCT)
     .debounceTime(300)
     .do((payload) => this.firebaseService.deleteProduct(payload))
+    .filter(() => true);
+
+  @Effect()
+  AddOrder$: Observable<Action> = this.actions$
+    .ofType(OrderActions.ActionTypes.ADD_ORDER)
+    .debounceTime(300)
+    .do((payload) => this.firebaseService.addOrder(payload))
+    .map((payload) => new OrderActions.AddOrderSuccess(payload))
     .filter(() => true);
 }
