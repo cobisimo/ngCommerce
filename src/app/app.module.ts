@@ -14,11 +14,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { effects, reducers } from './store';
 
 import { FirebaseService } from './firebase.service';
+import { AuthService } from 'auth.service';
 import { AdminGuard } from './admin.guard';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
-import { AuthComponent } from './auth/auth.component';
+import { HeaderComponent } from './header/header.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -36,14 +37,14 @@ const appRoutes: Routes = [
   { path: 'orders', component: OrderListComponent },
   { path: 'orders/:id', component: OrderDetailsComponent },
   { path: 'basket', component: BasketComponent },
-  { path: 'users', component: UserListComponent, canActivate: ['AdminGuard'] },
+  { path: 'users', component: UserListComponent, canActivate: [AdminGuard] },
   { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,
+    HeaderComponent,
     UserListComponent,
     NotFoundComponent,
     ProductListComponent,
@@ -68,7 +69,7 @@ const appRoutes: Routes = [
     EffectsModule.forRoot(effects),
     NgbModule.forRoot()
   ],
-  providers: [FirebaseService, AdminGuard, NgbActiveModal],
+  providers: [FirebaseService, AuthService, AdminGuard, NgbActiveModal],
   bootstrap: [AppComponent],
   entryComponents: [ProductEditComponent]
 })
