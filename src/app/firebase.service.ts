@@ -47,11 +47,6 @@ export class FirebaseService {
     return this.orders$.push(data.payload);
   }
 
-  getUsers() {
-    this.users$ = this.db.list('/users');
-    return this.users$;
-  }
-
   getUser(user): any {
     this.db.object(`/users/${user.uid}`).$ref.on('value', (snapshot) => {
       if (snapshot.exists()) {
@@ -66,6 +61,21 @@ export class FirebaseService {
       }
     });
     return this.db.object(`/users/${user.uid}`);
+  }
+
+  loadUsers() {
+    this.users$ = this.db.list('/users');
+    return this.users$;
+  }
+
+  updateUser(data) {
+    const key = data.payload.$key;
+    delete data.payload.$key;
+    return this.db.object(`/users/${key}`).update(data.payload);
+  }
+
+  deleteUser(data) {
+    return this.db.object(`/users/${data.payload.$key}`).remove();
   }
 
   updateProfile(data) {

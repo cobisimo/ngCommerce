@@ -5,10 +5,11 @@ export enum Role {
 }
 
 export interface User {
-  uid: string;
+  $key?: string;
+  uid?: string;
   name: string;
   email: string;
-  billingAddress: string;
-  shippingAddress: string;
+  billingAddress?: string;
+  shippingAddress?: string;
   role: string;
 }
