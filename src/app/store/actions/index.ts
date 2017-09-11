@@ -1,12 +1,15 @@
 import * as ProductActions from './product.actions';
 import * as OrderActions from './order.actions';
+import * as UserActions from './user.actions';
 
 export {
   ProductActions,
-  OrderActions
+  OrderActions,
+  UserActions
 };
 
 export default [
   ProductActions,
-  OrderActions
+  OrderActions,
+  UserActions
 ];

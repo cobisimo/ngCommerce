@@ -5,12 +5,16 @@ import {
 } from 'angularfire2/database';
 import { Product } from 'models/product';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from 'auth.service';
+import { User } from 'models/user';
+import { Order } from 'models/order';
 
 @Injectable()
 export class FirebaseService {
-  private products$: FirebaseListObservable<any[]>;
-  private orders$: FirebaseListObservable<any[]>;
-  private users$: FirebaseListObservable<any[]>;
+  private products$: FirebaseListObservable<Product[]>;
+  private orders$: FirebaseListObservable<Order[]>;
+  private users$: FirebaseListObservable<User[]>;
+  private user$: FirebaseListObservable<any>;
 
   constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { }
 
@@ -48,22 +52,20 @@ export class FirebaseService {
     return this.users$;
   }
 
-  initUser(uid) {
-    console.log(uid);
-    this.db.object(`/users/${uid}`).$ref.once('value', (snapshot) => {
+  getUser(user): any {
+    this.db.object(`/users/${user.uid}`).$ref.on('value', (snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot);
-        alert('exist');
+        snapshot.ref.off();
+        return snapshot.val();
       } else {
-        alert('not exist');
-        this.db.object(`users/${uid}`).update({
+        this.db.object(`users/${user.uid}`).update({
+          'name': user.displayName,
+          'email': user.email,
           'role': 'USER'
-        }).then((res) => {
-          console.log(res);
-        }).catch(error => console.log(error));
+        });
       }
     });
-    // return this.users$.push(data.payload);
+    return this.db.object(`/users/${user.uid}`);
   }
 
   updateProfile(data) {

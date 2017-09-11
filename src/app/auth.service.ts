@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
 
-import { FirebaseService } from 'firebase.service';
+import { UserActions } from 'store/actions';
+import { User } from 'models/user';
 
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
 
-  constructor(private firebaseAuth: AngularFireAuth, private firebaseService: FirebaseService) {
+  constructor(private firebaseAuth: AngularFireAuth, private userStore: Store<{ order: User }>) {
     this.user = firebaseAuth.authState;
   }
 
@@ -19,17 +21,23 @@ export class AuthService {
     return this.user !== null;
   }
 
+  get currentUser(): any {
+    return this.authenticated ? this.user : null;
+  }
+
   login() {
     this.firebaseAuth
       .auth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((response) => {
-        this.firebaseService.initUser(response.user.uid);
+        this.userStore.dispatch(new UserActions.GetUser(response.user));
       });
   }
 
   logout() {
     this.firebaseAuth
       .auth
-      .signOut();
+      .signOut().then((res) => {
+        this.userStore.dispatch(new UserActions.LogoutUser());
+      });
   }
 }

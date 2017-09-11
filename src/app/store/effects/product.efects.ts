@@ -2,18 +2,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { ProductActions, OrderActions } from 'store/actions';
+import { ProductActions } from 'store/actions';
 import { Product } from 'models/product';
 import { FirebaseService } from 'firebase.service';
-import { AngularFireDatabase } from 'angularfire2/database';
-import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
 
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/filter';
 
@@ -21,7 +18,7 @@ import 'rxjs/add/operator/filter';
 @Injectable()
 export class ProductEffects {
 
-  constructor(private actions$: Actions, private firebaseService: FirebaseService, private db: AngularFireDatabase) {
+  constructor(private actions$: Actions, private firebaseService: FirebaseService) {
   }
 
   @Effect()
@@ -53,13 +50,5 @@ export class ProductEffects {
     .ofType(ProductActions.ActionTypes.DELETE_PRODUCT)
     .debounceTime(300)
     .do((payload) => this.firebaseService.deleteProduct(payload))
-    .filter(() => true);
-
-  @Effect()
-  AddOrder$: Observable<Action> = this.actions$
-    .ofType(OrderActions.ActionTypes.ADD_ORDER)
-    .debounceTime(300)
-    .do((payload) => this.firebaseService.addOrder(payload))
-    .map((payload) => new OrderActions.AddOrderSuccess(payload))
     .filter(() => true);
 }
