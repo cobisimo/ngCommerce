@@ -14,7 +14,6 @@ import { UserActions } from 'store/actions';
 import { FirebaseService } from 'firebase.service';
 import { User } from 'models/user';
 
-
 @Injectable()
 export class UserEffects {
 
@@ -30,4 +29,11 @@ export class UserEffects {
     .map((user: User) => {
       return new UserActions.GetUserSuccess(user);
     });
+
+  @Effect()
+  UpdateProfile$: Observable<Action> = this.actions$
+    .ofType(UserActions.ActionTypes.UPDATE_PROFILE)
+    .debounceTime(300)
+    .do((payload) => this.firebaseService.updateProfile(payload))
+    .filter(() => true);
 }

@@ -6,7 +6,8 @@ import { User } from 'models/user';
 export const ActionTypes = {
   GET_USER: type('GET_USER'),
   GET_USER_SUCCESS: type('GET_USER_SUCCESS'),
-  LOGOUT_USER: type('LOGOUT_USER')
+  LOGOUT_USER: type('LOGOUT_USER'),
+  UPDATE_PROFILE: type('UPDATE_PROFILE')
 };
 
 export class GetUser implements Action {
@@ -24,7 +25,13 @@ export class LogoutUser implements Action {
   constructor(public payload?: any) { }
 }
 
+export class UpdateProfile implements Action {
+  readonly type = ActionTypes.UPDATE_PROFILE;
+  constructor(public payload: any) { }
+}
+
 export type Actions
   = GetUser
   | GetUserSuccess
-  | LogoutUser;
+  | LogoutUser
+  | UpdateProfile;

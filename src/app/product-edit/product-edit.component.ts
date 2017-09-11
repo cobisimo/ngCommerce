@@ -39,7 +39,7 @@ export class ProductEditComponent implements OnInit {
       });
   }
 
-  addProduct(text) {
+  addProduct() {
     if (this.product && this.product.$key) {
       this.store.dispatch(new ProductActions.UpdateProduct({ ...this.productForm.value, $key: this.product.$key }));
     } else {

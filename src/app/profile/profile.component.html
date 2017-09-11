@@ -1,0 +1,11 @@
+<form [formGroup]="profileForm" (ngSubmit)="updateProfile()" novalidate autocomplete="off">
+  <div class="modal-body">
+    <input placeholder="Your full name" class="form-control" name="title" formControlName="name">
+    <input placeholder="Your email address" class="form-control" name="title" formControlName="email">
+    <input placeholder="Your billing address" class="form-control" name="title" formControlName="billingAddress">
+    <input placeholder="Your shipping address" class="form-control" name="title" formControlName="billingAddress">
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>

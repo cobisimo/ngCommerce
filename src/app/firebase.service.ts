@@ -69,7 +69,6 @@ export class FirebaseService {
   }
 
   updateProfile(data) {
-    const uid = this.afAuth.auth.currentUser.uid;
-    this.db.object(`/products/${uid}`).update(data);
+    this.db.object(`/users/${data.payload.uid}`).update(data.payload.data);
   }
 }

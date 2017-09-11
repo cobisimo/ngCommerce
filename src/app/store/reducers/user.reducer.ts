@@ -11,7 +11,7 @@ const initialState: User = null;
 export function userReducer(state = initialState, action: UserActions.Actions): User {
   switch (action.type) {
     case UserActions.ActionTypes.GET_USER_SUCCESS:
-      return {...action.payload};
+      return {...action.payload, uid: action.payload.$key};
     case UserActions.ActionTypes.LOGOUT_USER:
       return null;
     default:
