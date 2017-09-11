@@ -6,7 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from 'models/user';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class UserGuard implements CanActivate {
   user: Observable<User>;
 
   constructor(private userStore: Store<{ user: User }>) { }
@@ -15,6 +15,6 @@ export class AdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     this.user = this.userStore.select('user');
-    return this.user.map(user => user && user.role === 'ADMIN');
+    return this.user.map(user => user !== null);
   }
 }

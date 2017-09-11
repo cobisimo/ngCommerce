@@ -8,6 +8,7 @@ import { Product } from 'models/product';
 import { ProductActions, OrderActions } from 'store/actions';
 import { ProductEditComponent } from 'product-edit/product-edit.component';
 import { Order } from 'models/order';
+import { User } from 'models/user';
 
 @Component({
   selector: 'app-product-list',
@@ -17,15 +18,18 @@ import { Order } from 'models/order';
 export class ProductListComponent implements OnInit {
   products: Observable<Product[]>;
   order: Observable<Order>;
+  user: Observable<User>;
   product: Product = null;
 
   constructor(
     private productsStore: Store<{ products: Product[] }>,
     private orderStore: Store<{ order: Order }>,
+    private userStore: Store<{ user: User }>,
     private modalService: NgbModal
   ) {
     this.products = this.productsStore.select('products');
     this.order = this.orderStore.select('order');
+    this.user = this.userStore.select('user');
   }
 
   ngOnInit() {

@@ -15,7 +15,6 @@ import { effects, reducers } from './store';
 
 import { FirebaseService } from './firebase.service';
 import { AuthService } from 'auth.service';
-import { AdminGuard } from './admin.guard';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -30,6 +29,9 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { BasketComponent } from './basket/basket.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UserGuard } from 'user.guard';
+import { ManagerGuard } from 'manager.guard';
+import { AdminGuard } from 'admin.guard';
 
 const appRoutes: Routes = [
   { path: '', component: HomePageComponent },
@@ -39,7 +41,7 @@ const appRoutes: Routes = [
   { path: 'orders/:id', component: OrderDetailsComponent },
   { path: 'basket', component: BasketComponent },
   { path: 'users', component: UserListComponent, canActivate: [AdminGuard] },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [UserGuard] },
   { path: '**', component: NotFoundComponent }
 ];
 

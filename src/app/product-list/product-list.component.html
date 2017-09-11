@@ -6,8 +6,8 @@
     <a [routerLink]="['/products', product.$key]">
       #{{product.pid}} {{product.title}} - {{product.price | currency:'USD':true}}
     </a>
-    <button (click)="selectProduct(product)">Edit</button>
-    <button (click)="deleteProduct(product)">Delete</button>
+    <button (click)="selectProduct(product)" *ngIf="(user | async)?.role === 'ADMIN' || (user | async)?.role === 'MANAGER'">Edit</button>
+    <button (click)="deleteProduct(product)" *ngIf="(user | async)?.role === 'ADMIN'">Delete</button>
     <button (click)="buyProduct(product)">Add to basket</button>
   </li>
 </ul>

@@ -6,7 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from 'models/user';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class ManagerGuard implements CanActivate {
   user: Observable<User>;
 
   constructor(private userStore: Store<{ user: User }>) { }
